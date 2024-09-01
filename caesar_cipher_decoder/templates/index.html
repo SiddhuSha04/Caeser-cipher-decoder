@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Cipher Decoder</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #f9f9f9, #e2e2e2);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 700px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: 500;
+            color: #555;
+        }
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        .form-group label {
+            margin-right: 15px;
+        }
+        input[type="submit"] {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.3s;
+        }
+        input[type="submit"]:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        .result, .brute-force-result {
+            margin-top: 20px;
+        }
+        .result p, .brute-force-result div {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+        .brute-force-result div {
+            background: #fff;
+            border-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Caesar Cipher Encoder/Decoder</h1>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="text">Text:</label>
+                <textarea id="text" name="text" rows="5" placeholder="Enter your text here..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="shift">Shift:</label>
+                <input type="number" id="shift" name="shift" value="3" min="0" max="25">
+            </div>
+            <div class="form-group">
+                <input type="radio" id="encrypt" name="operation" value="encrypt" checked>
+                <label for="encrypt">Encrypt</label>
+                <input type="radio" id="decrypt" name="operation" value="decrypt">
+                <label for="decrypt">Decrypt</label>
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+
+        <form method="POST" style="margin-top: 20px;">
+            <input type="hidden" name="bruteforce" value="true">
+            <div class="form-group">
+                <label for="text_bruteforce">Text for Brute Force:</label>
+                <textarea id="text_bruteforce" name="text" rows="5" placeholder="Enter your text here..."></textarea>
+            </div>
+            <input type="submit" value="Bruteforce Decode">
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <h2>Result:</h2>
+            <p>{{ result }}</p>
+        </div>
+        {% endif %}
+        
+        {% if brute_force_results %}
+        <div class="brute-force-result">
+            <h2>Bruteforce Results:</h2>
+            {% for shift, decrypted_text in brute_force_results %}
+            <div>Shift {{ shift }}: {{ decrypted_text }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
